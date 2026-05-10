@@ -189,6 +189,29 @@ export function AvatarYanis() {
   );
 }
 
+export function AvatarAybek() {
+  return (
+    <svg viewBox="0 0 120 120" className="w-full h-full">
+      <circle cx="60" cy="60" r="58" fill="#fef2f2" />
+      {/* Turkish flag background crescent + star */}
+      <circle cx="55" cy="52" r="24" fill="#dc2626" />
+      <circle cx="60" cy="52" r="19" fill="#fef2f2" />
+      {/* Star */}
+      <polygon points="78,52 72,56 74,63 68,58 62,63 64,56 58,52 65,52 68,45 71,52" fill="#dc2626" />
+      {/* Mosque silhouette */}
+      <path d="M30 90 L30 78 Q45 65 60 78 Q75 65 90 78 L90 90Z" fill="#991b1b" opacity="0.3" />
+      {/* Minaret */}
+      <rect x="35" y="72" width="4" height="18" rx="1" fill="#991b1b" opacity="0.4" />
+      <rect x="81" y="72" width="4" height="18" rx="1" fill="#991b1b" opacity="0.4" />
+      {/* Dome */}
+      <ellipse cx="60" cy="78" rx="12" ry="6" fill="#991b1b" opacity="0.25" />
+      {/* Turkish tea glass */}
+      <path d="M48 96 Q48 102 52 105 L56 105 Q60 102 60 96Z" fill="#f59e0b" opacity="0.6" />
+      <rect x="50" y="94" width="8" height="3" rx="1" fill="#f59e0b" opacity="0.5" />
+    </svg>
+  );
+}
+
 export function AvatarOther() {
   return (
     <svg viewBox="0 0 120 120" className="w-full h-full">
@@ -204,6 +227,7 @@ export const PROFILES = [
   { name: "Alexander", tagline: "Wall Street", Avatar: AvatarAlexander, color: "#10b981" },
   { name: "Alix", tagline: "Pasta Entrepreneur", Avatar: AvatarAlix, color: "#f59e0b" },
   { name: "Antoine", tagline: "Crypto King", Avatar: AvatarAntoine, color: "#8b5cf6" },
+  { name: "Aybek", tagline: "Istanbul Forever", Avatar: AvatarAybek, color: "#dc2626" },
   { name: "Baptiste", tagline: "Vive la France", Avatar: AvatarBaptiste, color: "#ef4444" },
   { name: "Christian", tagline: "Gone Fishing", Avatar: AvatarChristian, color: "#06b6d4" },
   { name: "Thibaud", tagline: "Fly Safe !", Avatar: AvatarThibaud, color: "#3b82f6" },
