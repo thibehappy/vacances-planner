@@ -55,7 +55,8 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const { name, date, status } = await req.json();
+  const body = await req.json();
+  const { name, date, status, batch } = body;
   if (!name) {
     return NextResponse.json({ error: "Missing name" }, { status: 400 });
   }
@@ -63,7 +64,15 @@ export async function POST(req: Request) {
   const data = await readData();
   if (!data[name]) data[name] = {};
 
-  if (date && status) {
+  if (batch && typeof batch === "object") {
+    for (const [d, s] of Object.entries(batch)) {
+      if (s === "unknown") {
+        delete data[name][d];
+      } else {
+        data[name][d] = s as string;
+      }
+    }
+  } else if (date && status) {
     if (status === "unknown") {
       delete data[name][date];
     } else {

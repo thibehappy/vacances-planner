@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import dynamic from "next/dynamic";
 import { PROFILES } from "./components/Avatars";
 
@@ -135,6 +135,7 @@ export default function Home() {
   const [brushColor, setBrushColor] = useState<Status | null>(null);
   const [activeTab, setActiveTab] = useState<"mine" | "group">("mine");
   const [saved, setSaved] = useState(false);
+  const skipPollUntil = useRef(0);
 
   useEffect(() => {
     const saved = localStorage.getItem("vacances-planner-name");
@@ -143,6 +144,7 @@ export default function Home() {
   }, []);
 
   const fetchData = useCallback(async () => {
+    if (Date.now() < skipPollUntil.current) return;
     try {
       const res = await fetch("/api/availability");
       if (res.ok) setData(await res.json());
@@ -229,20 +231,26 @@ export default function Home() {
 
   const handleSetAll = async (status: Status) => {
     if (!userName) return;
-    const updates: Record<string, Status> = {};
+    const batch: Record<string, Status> = {};
     for (const d of ALL_DATES) {
-      updates[dateKey(d)] = status;
+      batch[dateKey(d)] = status;
     }
     setData((prev) => ({
       ...prev,
-      [userName]: { ...(prev[userName] || {}), ...updates },
+      [userName]: { ...(prev[userName] || {}), ...batch },
     }));
-    for (const d of ALL_DATES) {
-      fetch("/api/availability", {
+    skipPollUntil.current = Date.now() + 10000;
+    try {
+      await fetch("/api/availability", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: userName, date: dateKey(d), status }),
-      }).catch(() => {});
+        body: JSON.stringify({ name: userName, batch }),
+      });
+      fetchData();
+    } catch {
+      /* offline */
+    } finally {
+      skipPollUntil.current = 0;
     }
   };
 
