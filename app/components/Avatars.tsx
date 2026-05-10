@@ -167,41 +167,34 @@ export function AvatarChristian() {
 export function AvatarYanis() {
   return (
     <svg viewBox="0 0 120 120" className="w-full h-full">
-      {/* Tricolor + pink background */}
-      <circle cx="60" cy="60" r="58" fill="#fce7f3" />
-      {/* Small French flag */}
-      <rect x="78" y="15" width="6" height="4" fill="#2563eb" />
-      <rect x="84" y="15" width="6" height="4" fill="white" stroke="#e5e7eb" strokeWidth="0.5" />
-      <rect x="90" y="15" width="6" height="4" fill="#ef4444" />
-      <line x1="78" y1="15" x2="78" y2="8" stroke="#6b7280" strokeWidth="1" />
-      {/* Headphones */}
-      <path d="M30 58 Q30 28 60 28 Q90 28 90 58" stroke="#1e293b" strokeWidth="5" fill="none" strokeLinecap="round" />
-      {/* Ear cups */}
-      <rect x="22" y="52" width="14" height="22" rx="5" fill="#1e293b" />
-      <rect x="84" y="52" width="14" height="22" rx="5" fill="#1e293b" />
-      <rect x="24" y="55" width="10" height="16" rx="4" fill="#374151" />
-      <rect x="86" y="55" width="10" height="16" rx="4" fill="#374151" />
-      {/* Microphone */}
-      <rect x="55" y="78" width="10" height="20" rx="5" fill="#6b7280" />
-      <ellipse cx="60" cy="78" rx="8" ry="10" fill="#4b5563" />
-      {/* Mic grille */}
-      <line x1="54" y1="74" x2="66" y2="74" stroke="#9ca3af" strokeWidth="0.8" />
-      <line x1="54" y1="77" x2="66" y2="77" stroke="#9ca3af" strokeWidth="0.8" />
-      <line x1="54" y1="80" x2="66" y2="80" stroke="#9ca3af" strokeWidth="0.8" />
-      {/* Music notes */}
-      <text x="18" y="90" fontSize="14" fill="#ec4899">♪</text>
-      <text x="95" y="42" fontSize="12" fill="#f472b6">♫</text>
-      <text x="42" y="108" fontSize="10" fill="#ec4899">♪</text>
+      <circle cx="60" cy="60" r="58" fill="#e0f2fe" />
+      {/* Football pitch lines */}
+      <ellipse cx="60" cy="60" rx="40" ry="40" fill="none" stroke="#7dd3fc" strokeWidth="1.5" opacity="0.4" />
+      <line x1="20" y1="60" x2="100" y2="60" stroke="#7dd3fc" strokeWidth="1" opacity="0.3" />
+      {/* Football */}
+      <circle cx="60" cy="52" r="20" fill="white" stroke="#1e293b" strokeWidth="1.5" />
+      <path d="M60 32 L54 40 L42 42 L44 54 L54 62 L66 62 L76 54 L78 42 L66 40Z" fill="none" stroke="#1e293b" strokeWidth="1.2" />
+      <polygon points="60,32 54,40 66,40" fill="#1e293b" />
+      <polygon points="42,42 44,54 54,48" fill="#1e293b" />
+      <polygon points="78,42 76,54 66,48" fill="#1e293b" />
+      <polygon points="54,62 60,56 66,62" fill="#1e293b" />
+      {/* OM shield shape */}
+      <path d="M50 78 L50 90 Q60 100 70 90 L70 78Z" fill="#2aa7e0" stroke="#1e293b" strokeWidth="1.2" />
+      <text x="60" y="92" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">OM</text>
+      {/* Stars */}
+      <text x="22" y="30" fontSize="10" fill="#2aa7e0">★</text>
+      <text x="90" y="85" fontSize="8" fill="#2aa7e0">★</text>
+      <text x="85" y="28" fontSize="7" fill="#7dd3fc">★</text>
     </svg>
   );
 }
 
 export const PROFILES = [
-  { name: "Thibaud", tagline: "Fly Safe !", Avatar: AvatarThibaud, color: "#3b82f6" },
   { name: "Alexander", tagline: "Wall Street", Avatar: AvatarAlexander, color: "#10b981" },
   { name: "Alix", tagline: "Pasta Entrepreneur", Avatar: AvatarAlix, color: "#f59e0b" },
   { name: "Antoine", tagline: "Crypto King", Avatar: AvatarAntoine, color: "#8b5cf6" },
   { name: "Baptiste", tagline: "Vive la France", Avatar: AvatarBaptiste, color: "#ef4444" },
   { name: "Christian", tagline: "Gone Fishing", Avatar: AvatarChristian, color: "#06b6d4" },
-  { name: "Yanis", tagline: "Dans le Mic", Avatar: AvatarYanis, color: "#ec4899" },
+  { name: "Thibaud", tagline: "Fly Safe !", Avatar: AvatarThibaud, color: "#3b82f6" },
+  { name: "Yanis", tagline: "Allez Marseille !", Avatar: AvatarYanis, color: "#2aa7e0" },
 ] as const;
