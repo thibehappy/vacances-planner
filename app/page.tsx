@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
-import { PROFILES, AvatarOther } from "./components/Avatars";
+import { PROFILES } from "./components/Avatars";
 
 const ModelViewer = dynamic(() => import("./components/ModelViewer"), {
   ssr: false,
@@ -135,7 +135,6 @@ export default function Home() {
   const [brushColor, setBrushColor] = useState<Status | null>(null);
   const [activeTab, setActiveTab] = useState<"mine" | "group">("mine");
   const [saved, setSaved] = useState(false);
-  const [showOtherInput, setShowOtherInput] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("vacances-planner-name");
@@ -275,7 +274,7 @@ export default function Home() {
           {PROFILES.map(({ name, tagline, Avatar, color }) => (
             <button
               key={name}
-              onClick={() => { setShowOtherInput(false); selectProfile(name); }}
+              onClick={() => selectProfile(name)}
               className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white shadow-sm hover:shadow-lg hover:scale-105 transition-all cursor-pointer border-2 border-transparent group"
               onMouseEnter={(e) =>
                 (e.currentTarget.style.borderColor = color)
@@ -298,46 +297,7 @@ export default function Home() {
               </span>
             </button>
           ))}
-          <button
-            onClick={() => setShowOtherInput(true)}
-            className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white shadow-sm hover:shadow-lg hover:scale-105 transition-all cursor-pointer border-2 border-transparent group"
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.borderColor = "#6b7280")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.borderColor = "transparent")
-            }
-          >
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden ring-2 ring-gray-100 group-hover:ring-4 transition-all"
-              style={{ "--tw-ring-color": "#6b7280" } as React.CSSProperties}
-            >
-              <AvatarOther />
-            </div>
-            <span className="font-semibold text-gray-800 text-sm">Autre</span>
-            <span className="text-[11px] text-gray-400 leading-tight">Invité</span>
-          </button>
         </div>
-
-        {showOtherInput && (
-          <div className="mt-4 flex gap-2 max-w-xs w-full">
-            <input
-              type="text"
-              placeholder="Ton prénom..."
-              value={nameInput}
-              onChange={(e) => setNameInput(e.target.value)}
-              onKeyDown={(e) => { if (e.key === "Enter" && nameInput.trim()) selectProfile(nameInput.trim()); }}
-              className="flex-1 px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm"
-              autoFocus
-            />
-            <button
-              onClick={() => { if (nameInput.trim()) selectProfile(nameInput.trim()); }}
-              disabled={!nameInput.trim()}
-              className="px-4 py-2 bg-gray-700 text-white rounded-xl text-sm font-medium hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              Go
-            </button>
-          </div>
-        )}
 
         {/* 3D Model - small decorative */}
         <div className="mt-10 w-full max-w-2xl mx-auto">
