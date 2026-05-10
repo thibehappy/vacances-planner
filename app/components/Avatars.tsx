@@ -189,6 +189,17 @@ export function AvatarYanis() {
   );
 }
 
+export function AvatarOther() {
+  return (
+    <svg viewBox="0 0 120 120" className="w-full h-full">
+      <circle cx="60" cy="60" r="58" fill="#f3f4f6" />
+      <circle cx="60" cy="45" r="18" fill="#d1d5db" />
+      <ellipse cx="60" cy="95" rx="30" ry="22" fill="#d1d5db" />
+      <text x="60" y="60" textAnchor="middle" fontSize="28" fill="#9ca3af" dy="-15">?</text>
+    </svg>
+  );
+}
+
 export const PROFILES = [
   { name: "Alexander", tagline: "Wall Street", Avatar: AvatarAlexander, color: "#10b981" },
   { name: "Alix", tagline: "Pasta Entrepreneur", Avatar: AvatarAlix, color: "#f59e0b" },

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
-import { PROFILES } from "./components/Avatars";
+import { PROFILES, AvatarOther } from "./components/Avatars";
 
 const ModelViewer = dynamic(() => import("./components/ModelViewer"), {
   ssr: false,
@@ -135,6 +135,7 @@ export default function Home() {
   const [brushColor, setBrushColor] = useState<Status | null>(null);
   const [activeTab, setActiveTab] = useState<"mine" | "group">("mine");
   const [saved, setSaved] = useState(false);
+  const [showOtherInput, setShowOtherInput] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("vacances-planner-name");
@@ -274,7 +275,7 @@ export default function Home() {
           {PROFILES.map(({ name, tagline, Avatar, color }) => (
             <button
               key={name}
-              onClick={() => selectProfile(name)}
+              onClick={() => { setShowOtherInput(false); selectProfile(name); }}
               className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white shadow-sm hover:shadow-lg hover:scale-105 transition-all cursor-pointer border-2 border-transparent group"
               onMouseEnter={(e) =>
                 (e.currentTarget.style.borderColor = color)
@@ -297,7 +298,46 @@ export default function Home() {
               </span>
             </button>
           ))}
+          <button
+            onClick={() => setShowOtherInput(true)}
+            className="flex flex-col items-center gap-2 p-3 rounded-2xl bg-white shadow-sm hover:shadow-lg hover:scale-105 transition-all cursor-pointer border-2 border-transparent group"
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.borderColor = "#6b7280")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.borderColor = "transparent")
+            }
+          >
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden ring-2 ring-gray-100 group-hover:ring-4 transition-all"
+              style={{ "--tw-ring-color": "#6b7280" } as React.CSSProperties}
+            >
+              <AvatarOther />
+            </div>
+            <span className="font-semibold text-gray-800 text-sm">Autre</span>
+            <span className="text-[11px] text-gray-400 leading-tight">Invité</span>
+          </button>
         </div>
+
+        {showOtherInput && (
+          <div className="mt-4 flex gap-2 max-w-xs w-full">
+            <input
+              type="text"
+              placeholder="Ton prénom..."
+              value={nameInput}
+              onChange={(e) => setNameInput(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter" && nameInput.trim()) selectProfile(nameInput.trim()); }}
+              className="flex-1 px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 text-sm"
+              autoFocus
+            />
+            <button
+              onClick={() => { if (nameInput.trim()) selectProfile(nameInput.trim()); }}
+              disabled={!nameInput.trim()}
+              className="px-4 py-2 bg-gray-700 text-white rounded-xl text-sm font-medium hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              Go
+            </button>
+          </div>
+        )}
 
         {/* 3D Model - small decorative */}
         <div className="mt-10 w-full max-w-2xl mx-auto">
@@ -322,27 +362,29 @@ export default function Home() {
           <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
             <span>🏖️</span> Vacances 2026
           </h1>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {MyAvatar && (
-              <div className="w-8 h-8 rounded-full overflow-hidden ring-1 ring-gray-200">
+              <div className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-indigo-100">
                 <MyAvatar />
               </div>
             )}
-            <span className="text-sm text-gray-500 hidden sm:inline">
-              <strong className="text-gray-800">{userName}</strong>
+            <span className="text-sm font-semibold text-gray-800 hidden sm:inline">
+              {userName}
             </span>
-            <button
-              onClick={handleLeave}
-              className="text-xs px-2 py-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors cursor-pointer"
-            >
-              Changer
-            </button>
-            <button
-              onClick={handleDeleteData}
-              className="text-xs px-2 py-1 rounded-lg text-red-300 hover:text-red-500 hover:bg-red-50 transition-colors cursor-pointer"
-            >
-              Supprimer mes donnees
-            </button>
+            <div className="flex items-center gap-1 ml-2">
+              <button
+                onClick={handleLeave}
+                className="text-xs px-3 py-1.5 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700 transition-colors cursor-pointer"
+              >
+                Changer
+              </button>
+              <button
+                onClick={handleDeleteData}
+                className="text-xs px-3 py-1.5 rounded-lg bg-red-50 text-red-400 hover:bg-red-100 hover:text-red-600 transition-colors cursor-pointer"
+              >
+                Supprimer
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -404,7 +446,7 @@ export default function Home() {
                 : "bg-indigo-500 text-white hover:bg-indigo-600"
             }`}
           >
-            {saved ? "Enregistre !" : "Enregistrer"}
+            {saved ? "Enregistré !" : "Enregistrer"}
           </button>
         </div>
 

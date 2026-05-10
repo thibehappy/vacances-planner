@@ -26,7 +26,7 @@ export default function ModelViewer() {
   return (
     <div className="w-full h-[350px]">
       <Canvas
-        camera={{ position: [0, 2.5, 8], fov: 40 }}
+        camera={{ position: [0, 5, 20], fov: 32 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: "transparent" }}
       >
